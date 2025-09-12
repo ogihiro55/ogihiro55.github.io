@@ -1,0 +1,139 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=Shift-JIS">
+<title>proxy(DeleGate)の設定</title>
+</head>
+<body>
+<br><br><hr>
+<h1>proxy(DeleGate)の設定</h1>
+<hr>
+　当所は，構外のproxy server(squid)経由でInternetへ接続している。
+構内からのリクエストはproxy server(delegate)で１つにまとめ，構外のproxyへ
+アクセスさせる。<br>
+
+<ol>
+<li><a href="#policy">delegate設定の方針</a><br><br>
+<li><a href="#download">delegateの入手</a><br><br>
+<li><a href="#install">delegateのinstall</a><br><br>
+<li><a href="#run">delegateの実行</a><br><br>
+<li><a href="#clients">クライアントの設定</a><br><br>
+<li><a href="#maintener">メンテナンス</a><br><br>
+</ol>
+<hr>
+<ol>
+<li><a name="policy">delegate設定の方針</a><br>
+　構外(上流)のproxyがhttp(s)しか通さないので，http(s) delegateを１本起動する。
+（ftpサイトへのアクセスについては，当所では考慮不要である。構外proxyが上手く
+やってくれる。&gt;&gt; ftpget）<br>
+　同じURLへのアクセスが集中することが予想されるので，cache severを兼ね，回線
+混雑を緩和する。<br>
+　URLフィルタとして利用する。<br>
+　アクセスログを採取する。<br>
+<br>
+<li><a name="download">delegateの入手</a><br>
+　delegateは，http://www.delegate.org/delegate/
+にあるので，tar.gz形式を頂いてくる。<br>
+<br>
+<li><a name="install">delegateのinstall</a><br>
+<ul>
+<li>解凍<br>
+　適当なディレクトリで<br>
+　tar zxvf delegate***.tar.gz<br>
+<li>設定ファイル編集<br>
+　cd delegate***<br>
+　vi src/Makefile<br>
+　この中の，ADMIN = の所に管理者のメールアドレスを記入<br>
+<li>make<br>
+　普通にmake<br>
+<li>起動script作成<br>
+--delerun.rc--<br>
+#!/bin/sh<br>
+/path/to/delegated +=/path/to/deleparam<br>
+<br>
+--deleparam--<br>
+OWNER="user/group"<br>
+-P8080<br>
+DGROOT="/path/to/delegate"<br>
+SERVER=http<br>
+PROXY="wan-proxy-ip:8080:*"<br>
+EXPIRE=1800s<br>
+RELIABLE="192.168.LAN1.*,192.168.LAN2.*,........"<br>
+REACHABLE="+=/path/to/reject.list"<br>
+<br>
+--reject.list--<br>
+!eee.fff.ggg.hhh<br>
+!www.reject.example.jp<br>
+<br>
+--deleend.rc--<br>
+#!/bin/sh<br>
+/path/to/delegated -P8080 -Fkill<br>
+<br>
+</ul>
+<li><a name="run">delegateの実行・停止</a><br>
+実行はdelerun.rc を実行する。/etc/rc.d/rc.local あたりに /path/to/delerun.rcを追加して
+おけば，サーバ起動時に実行される。<br>
+停止はdeleend.rcを実行する。<br>
+<br>
+<li><a name="clients">クライアントの設定</a><br>
+　クライアント側では，webブラウザのproxyアドレス欄に pr-s ，ポート欄に 8080 と
+記入してもらい（全プロトコル共），
+pr-s からproxy serverのIPアドレスへの変換を，構内のname serverで行う。<br>
+　アドレス欄に，proxy serverのIPアドレスを書かせてしまうと，ネットワークの構成を
+変更した時，全クライアントの設定を変更しなくてはならない。<br>
+各LAN毎に別なホスト名（pr-sとかpr-j）を書いておいてもらえば，
+ネットワーク構成も，変更しやすい。<br>
+<br>
+<li><a name="maintener">メンテナンス</a><br>
+　delegateのlogファイルは，１日分づつ分けて圧縮・保存しておく。<br>
+alldayを毎日２３時５９分に実行する。<br>
+<br>
+--allday--<br>
+#!/usr/bin/perl<br>
+# $date = `date +%H%M%S` ; # for debug<br>
+$date = `date +%Y%m%d` ;<br>
+chomp $date ;<br>
+$deleroot = '/path/to/delegate' ;<br>
+system "/path/to/deleend.rc" ;<br>
+&cmpr;("8080") ;<br>
+&cmpr;("8080.http") ;<br>
+&cmpr;("errors.log") ;<br>
+system "rm -r $deleroot/cache/http/*" ;<br>
+system "/path/to/delerun.rc" ;<br>
+sub cmpr {<br>
+	system "compress $deleroot/log/@_" ;<br>
+	system "mv $deleroot/log/@_.Z $deleroot/log/$date-@_.Z" ;<br>
+}<br>
+<br>
+<br>
+適度に古くなったlogは，ハードディスクから退避させる。サボると動作が不安定になる。<br>
+<br>
+</ol>
+
+注：構外のproxyとは，青葉山センターの事
+<!------------------------->
+<hr>
+<table>
+<tr>
+  <td>URL</td>
+  <td>http://www.geocities.co.jp/SiliconValley/4441/</td>
+</tr>
+<tr>
+  <td>E-Mail</td>
+  <td>ogi_hiro AT geocities DOT co DOT jp</a></td>
+</tr>
+<tr>
+  <td colspan="2"><!--#filemod--></td>
+</tr>
+</table>
+<!------------------------->
+</body>
+</html>
+
+<!--
+     FILE ARCHIVED ON 02:00:02 Nov 07, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 02:13:54 Sep 10, 2025.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
