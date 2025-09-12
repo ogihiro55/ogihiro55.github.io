@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=Shift-JIS">
+<title>カーネルの再構築</title>
+</head>
+<body>
+<br><br><hr>
+<h1>カーネルの再構築</h1>
+<hr>
+　カーネルを再構築する前に，/etc/lilo.conf を編集し，現在のvmlinuzと，これから
+作るbzImageのどちらでも起動できるようにしておく。<br>
+　ＮＩＣを複数枚認識するために，slackware3.xでは，lilo.confに<br>
+append="ether=0,0,eth1 ether=0,0,eth2 ether=0,0,eth3"　と書いて，カーネル組み込みに
+したが，slack7.1では，lilo.confにappendの行は書かずに，モジュールで利用する様にする。<br>
+<br>
+　カーネルの再構築は，次の手順で行う。<br>
+/usr/src/linux　に移動してから，<br>
+make menuconfig　を，実行する。ここで，不要な機能のチェックマークを外す。<br>
+ＮＩＣ関連は，モジュールで使える様にしておく。<br>
+make menuconfigを終了し，<br>
+make dep ; make clean<br>
+make bzImage<br>
+とする。(slackware-3.x の頃は　make zlilo　でＯＫだったが，
+7.1では，make bzImageでないと，おさまらない）<br>
+make modules ; make modules_install<br>
+cp /usr/src/linux-xxx/arch/i386/boot/bzImage /　で，出来たカーネルをコピーし，<br>
+lilo<br>
+を実行してから，マシンを再起動する<br>
+
+<!------------------------->
+<hr>
+<table>
+<tr>
+  <td>URL</td>
+  <td>http://www.geocities.co.jp/SiliconValley/4441/</td>
+</tr>
+<tr>
+  <td>E-Mail</td>
+  <td>ogi_hiro@geocities.co.jp</td>
+</tr>
+<tr>
+  <td colspan="2"><!--#filemod--></td>
+</tr>
+</table>
+<!------------------------->
+</body>
+</html>
+
+<!--
+     FILE ARCHIVED ON 17:40:21 Nov 08, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 11:07:28 Sep 12, 2025.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
