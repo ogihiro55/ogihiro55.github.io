@@ -1,0 +1,101 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=Shift-JIS">
+<title>WindowsとLinuxを簡単に共存させる方法(UMSDOS)</title>
+</head>
+<body>
+<br><br><hr>
+<h1>WindowsとLinuxを簡単に共存させる方法(UMSDOS)</h1>
+<hr>
+　Linuxを初めてみようとしたときに，面倒だと思うのは，ハードディスクの
+フォーマット。<br>
+　特に１台しかパソコンを持っていない場合に，Windowsとの共存を考えると，
+LinuxのInstallをためらってしまうかも知れません。<br>
+　ちょっとLinuxを試してみたいだけなのに，ハードディスクの再フォーマット
+なんて，したくない。という方には，Slackware Linux(Zip Slack)をお勧めします（注０）。<br>
+　Windowsで使用しているハードディスクに約１７０Ｍ（注１）の空き容量
+（ダウンロードサイズは34.3MB）があれば，
+ハードディスクのパーテーション分割（再フォーマット）をしなくても，
+Linuxと，Windowsが共存して使えます（注２）。<br>
+<br>
+<blockquote>
+（注０）Zip Slackを実行した後で，Windowsのスキャンディスクを実行すると，Linuxのデータが
+入っているディレクトリ内でエラーが報告されます（実害の有無は？？？です）。<br>
+（注１）READMEによれば，１００Ｍ(Zip disk)で動く様に書いてありますが，
+私のＦＡＴ３２のハードディスク上では，サイズ＝73.1MB，ディスク上のサイズ＝165MBと
+表示されています。<br>
+（注２）X は，入って無かったと思います（追加は可能らしい）。あと，細かなツール類も
+抜けています。X やら，なにやらが入った Big Slack もありますが，サイズは710MB
+（REDMEMEによれば，インストールには約900M必要），
+私のディスク上のサイズは1.38GBと，大きくなります
+（ダウンロードサイズは合計で３０１ＭＢ。３１本のファイルに分割されています）。<br>
+</blockquote>
+<br>
+では，やってみましょう。<br>
+<ol>
+<li>必要な物
+<ul><li>SlackwareのInstallation Diskか，Internetに接続できる環境のどちらか一方
+    <li>フロッピーディスク１枚
+    <li>*.zip形式を解凍できるツール（Windows上で解凍します）
+    <li>（ぱそこん・でんき・じかん・そのた）
+</ul>
+<li>必要なファイル
+<ul><li>zipslack.zipの入手
+    <ul><li>slackwareのInstallation Diskがある場合は，その中の/zipslackにzipslack.zipがある。<br>
+        <li>Installation Diskが無い場合は，
+		ftp://ftp.slackware.com/pub/slackware/slackware-7.1/zipslackから，
+		zipslack.zip（34.3M）をダウンロードする。<br>
+    </ul>
+</ul>
+<ul><li>起動ディスク作成用データ
+    <ul><li>rawrite.exe(35k)
+        <li>bootdisk.img(1M)
+        <ul><li>どちらのファイルも，zipslack.zipと同じ場所にある。
+        </ul>
+    </ul>
+</ul>
+<li>zipslack.zipの解凍
+<ul><li>Windows上で動く適当な解凍ツールを使って，zipslack.zipを解凍します。
+	この時，linuxというディレクトリが出来ますが，このディレクトリが，ドライブのルートに出来る様に解凍します。<br>
+	ルートディレクトリに解凍されなかったら，後からlinuxディレクトリをルートディレクトリに移動します。
+</ul>
+<li>起動ディスクの作成
+<ul><li>rawrite.exeとbootdisk.imgを使用し，起動ディスクを作成します。<br>
+	WindowsのＤＯＳプロンプトから，<br>
+	rawrite bootdisk.img a:<br>
+	とやると，Ａドライブのフロッピーが起動ディスクになります。<br>
+	ＤＯＳプロントから実行するのは良くないと，どこかで読んだ記憶がありますが，私の環境では上手く行っています。
+</ul>
+<li>起動
+<ul><li>Windowsを終了し，前項で作った起動ディスクを使ってパソコンを起動します。<br>
+</ul>
+</ol>
+
+
+<!------------------------->
+<hr>
+<table>
+<tr>
+  <td>URL</td>
+  <td>http://www.geocities.co.jp/SiliconValley/4441/</td>
+</tr>
+<tr>
+  <td>E-Mail</td>
+  <td>ogi_hiro AT geocities DOT co DOT jp</a></td>
+</tr>
+<tr>
+  <td colspan="2"><!--#filemod--></td>
+</tr>
+</table>
+<!------------------------->
+</body>
+</html>
+
+<!--
+     FILE ARCHIVED ON 02:00:03 Nov 07, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 02:14:59 Sep 10, 2025.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
