@@ -1,0 +1,196 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=Shift-JIS">
+<title>slackware-7.1 install</title>
+</head>
+<body>
+<br><br><hr>
+<h1>slackware-7.1 install</h1>
+<hr>
+　slackware-7.1を入手し，自作ＡＴ互換機にinstallします。ＨＤとＣＤ－ＲＯＭは，
+ＩＤＥ接続されているという前提で書いています。<br>
+<br>
+（インストール後，しばらくたってから書いてますので，記憶があいまいです）<br>
+<br>
+<br>
+<ol>
+<li><a href="#junbi">必要ファイルの準備</a><br><br>
+<li><a href="#cdrom">ＣＤ－ＲＯＭをつくる</a><br><br>
+<li><a href="#boot">boot disk の作成</a><br><br>
+<li><a href="#root">root disk の作成</a><br><br>
+<li><a href="#hd">ハードディスクのパーテーション作成</a><br><br>
+<li><a href="#install">install</a><br><br>
+<li><a href="#reboot">起動</a><br><br>
+</ol>
+<hr>
+<ol>
+<li><a name="junbi">必要ファイルの準備</a><br>
+ftp.slackware.com/pub/slackware/slackware-7.1/</a>配下の<br>
+<ul>
+<li>bootdsks.144/<br>
+<li>rootdsks/<br>
+<li>slakware/<br>
+</ul>の中から，必要な物を頂く。必要なファイルは，ハードディスクと
+ＣＤ－ＲＯＭがIDE接続なら，<br>
+<ul><li>bootdsks.144/から，
+    <ul><li>RAWRITE13.EXE
+        <li>bare.i
+    </ul>
+    <li>rootdsks/から，
+    <ul><li>color.zg
+    </ul>
+</ul>
+くらいが必要。<br>
+<ul><li>slakware/配下は，
+    <ul><li>wget -m -np -b とかやって，かき集める。
+    </ul>
+</ul>
+<br>
+雑誌の付録等で入手出来れば吉なんでしょうけど・・・<br>
+<br>
+<ul>
+　なぜ，iso形式のＣＤ－ＲＯＭイメージをgetしなかったかというと・・・<br>
+　本所からInternetへは，青葉山Proxy server経由だが，
+１本のファイルのダウンロードに３時間２０分以上かかる物は
+ダウンロード出来なかった（多分青葉山proxyの設定）。
+wget -c も，不可だった。<br>
+　よって，*.isoをgetし，ＣＤ－ＲＯＭに焼くのは断念した。<br>
+（私が関わっている場所の環境の特殊な環境でのお話でした ^o^）。<br>
+</ul>
+<br>
+　slackwareの<a href="http://www.slackware.com/lists/">メーリングリスト</a>
+の中から，必要と思われるものにsubscribeしておくと，情報がもらえる。<br>
+<br>
+<br>
+<li><a name="cdrom">ＣＲ－ＲＯＭをつくる</a><br>
+　ダウンロードしたファイルをＣＤ－ＲＯＭに焼いておく。<br>
+　この時，ＣＤ－ＲＯＭのルートディレクトリにslakware/（へのシンボリックリンク）
+を置いておくのがコツ。
+(こうしておくと，installの時に，＜ＣＤ－ＲＯＭからのinstall＞を選んだだけで，
+上手く行くようになる)<br>
+<br>
+<li><a name="boot">bootdiskの作成</a><br>
+　RAWRITE13.EXEを使って，bare.iをフロッピーに書き込む。<br>
+　Windowsのdos窓からだと上手く行かないかも知れない。<br>
+<br>
+<br>
+<li><a name="root">rootdiskの作成</a><br>
+　RAWRITE13.EXEを使って，color.gzをフロッピーに書き込む。<br>
+　Windowsのdos窓からだと上手く行かないかも知れない。<br>
+<br>
+<br>
+<li><a name="hd">ハードディスクのパーテーション作成</a><br>
+　バックアップツールを使ってバックアップする時の便を考え，次の様なパーテーション
+構成にした。<br>
+<ul>
+<li>FAT16<br>
+<li>FAT16<br>
+<li>Linux native<br>
+<li>Linux swap<br>
+</ul>
+<br>
+手順<br>
+<ol>
+<li>パーテーションを切る前に，ハードディスク内のデータがbackupされているか確認する。<br>
+<li>bootdiskでマシン起動。<br>
+<li>途中で，指示に従い，rootdiskをドライブに入れ，起動処理を続けさせる。<br>
+<li>起動したら，rootでログイン<br>
+<li>cfdiskを実行<br>
+cfdiskで次のように設定する<br>
+<br>
+
+
+<table>
+<tr><td align="center" colspan="6">Heads: 255   Sectors per Track: 63   Cylinders: 1232</td>
+<tr>
+<td>　Name</td><td>　Flags</td><td>　Part Type</td><td>　FS Type</td><td>　[Label]</td><td>　Size(MB)</td>
+</tr>
+<tr>
+<td>　hda1</td><td>　Boot</td><td>　Primary</td><td>　FAT16</td><td>　[]</td><td>　2146.80</td>
+</tr>
+<tr>
+<td>　hda5</td><td></td><td>　Logical</td><td>　FAT16</td><td>　[NO NAME]</td><td>　2146.80</td>
+</tr>
+<tr>
+<td>　hda3</td><td></td><td>　Primary</td><td>　Linux ext2</td><td></td><td>　5000.98</td>
+</tr>
+<tr>
+<td>　hda4</td><td></td><td>　Primary</td><td>　Linux swap</td><td></td><td>　 838.98</td>
+</tr>
+</table><br>
+<li>結果を書き込み，cfdiskを終了。bootdiskを挿入し，Ctrl+Alt+Ddeleteで再起動。<br>
+</ol>
+<br>
+<br>
+<li><a name="install">install</a><br>
+　rootでログインし，setupを実行するとメニューが表示されるが，その中の
+KEYMAPを選択すると，以後，TARGET SOURCE SELECT INSTALL CONFIGUREの中身が
+順次実行される。<br>
+<ul>
+<li>KEYMAP は，とりあえずus.mapにしておく。
+（日本語106キーボードは後で設定する）。<br>
+<li>TARGETでは，/ としてmountするパーテーション，swapとしてmountするパーテーションが聞かれる。
+（cfdiskでFS type を正しく設定していれば，それを探して，表示してくれる。）<br>
+<li>SOURCEでは，ＣＤ－ＲＯＭからのinstallを選択。<br>
+<li>SELECTでは，お好みに応じて（全てを）選択。<br>
+<li>INSTALLでは，先人達に感謝しながら画面を眺める。<br>
+<li>CONFIGUREでは，ネットワーク関連と，タイムゾーン以外は，お好みに応じて。<br>
+　ネームサーバは，とりあえず設定しておき，後できちんと設定しなおす。<br>
+　ここで，もし，＠マークを入力したくなったら，Ｐの右隣のキーの代りに，
+SHIFT+2(")を押す。<br>
+　ネットワーク関連は，ＮＩＣを自動で認識させ，設定ファイルを作らせておくと，
+後の作業で，見通しが良い。<br>
+<ul>
+　ISAタイプのNE2000互換カードが刺さった状態で自動認識させるとハングアップする
+らしいが，PCIタイプの他のカードが刺さっていると，そちらを先に（それだけを）
+認識してくれる様だ。<br>
+</ul>
+　liloディスクは作っておく。<br>
+　lilo configurationは，自動で作り，実行しておく。<br>
+　rootのパスワードについて。<br>
+　たしか，この辺で，rootのパスワードを決めるように言われる。<br>
+この時，＜Num Lockの状態の確認＞と，＜キーボードのマッピングが狂っている＞
+ということが理解出来ていないと，キーボードの設定をした後で一瞬焦る（かも知れない）。<br>
+　何を言っているのかが解らなければ，ここではアルファベットのみの
+（記号・数字を使わない）パスワードを設定しておく。<br>
+　ただし，この様なパスワードは好ましくないので，
+キーボードの設定を日本語106キーにした後で，passwdコマンドを実行し，パスワードを
+設定し直す。<br>
+
+</ul>
+<br>
+<li><a name="reboot">起動<br>
+全てが終わったら，メッセージに従い，EXIT し，reboot。<br>
+上手く行くと起動する。<br>
+<br>
+</ol>
+終わったら<a href="./slack7-1.html">基本的な設定等に進む</a>。
+<br>
+<br>
+<!------------------------->
+<hr>
+<table>
+<tr>
+  <td>URL</td>
+  <td>http://www.geocities.co.jp/SiliconValley/4441/</td>
+</tr>
+<tr>
+  <td>E-Mail</td>
+  <td>ogi_hiro AT geocities DOT co DOT jp</a></td>
+</tr>
+<tr>
+  <td colspan="2"><!--#filemod--></td>
+</tr>
+</table>
+<!------------------------->
+</body>
+</html>
+<!--
+     FILE ARCHIVED ON 17:40:20 Nov 08, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 11:01:18 Sep 12, 2025.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
