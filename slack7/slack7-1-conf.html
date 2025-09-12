@@ -1,0 +1,76 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=Shift-JIS">
+<title>基本的な設定</title>
+</head>
+<body>
+<br><br><hr>
+<h1>基本的な設定</h1>
+<hr>
+<ol>
+<li>日本語１０６キーボードの設定<br>
+<br>
+<li>ブランクスクリーンまでの時間設定<br>
+<br>
+<li>ＵＰＳの設定<br>
+<br>
+<li>login時のfortune停止<br>
+<br>
+</ol>
+<hr>
+<ol>
+<li>日本語１０６キーボードの設定<br>
+　/etc/rc.d/rc.keymap をviで開き，us.map となっている所を，jp106.map と書き換える。<br>
+　この時，: キーは，SHIFT+; キーとなっている事に注意。<br>
+　編集が済んでから，rc.keymapを実行すると，日本語１０６キーボードが，普通に使える
+様になる。<br>
+　因みに，slackware7-1を標準的にインストールをすると，jp106.mapのデータは，<br>
+　/usr/lib/kbd/keymaps/i386/qwerty/jp106.map.gzである。<br>
+<br>
+<li>ブランクスクリーンまでの時間設定<br>
+　/etc/rc.d/rc.Mの中で，setterm -blank 0　としておき，
+コンソールを使わない時は，ＣＲＴの電源を切っておく。<br>
+<br>
+<li>ＵＰＳの設定<br>
+　当所のＵＰＳは，三菱電機のFREQUPS-Aなので，三菱電機ＵＰＳのページ
+（http://www.nagoya.melco.co.jp/FREQUPS/）
+へ行き，slackware7.1用のfreq_slk.tgzを頂いて来る。<br>
+　解凍すると，＜日本語による＞READMEがあるので，よく読みInstallとシャットダウン
+までの時間の設定をする。ここでは，停電からコンピュータにshutdwonさせるまでの時間と，
+停電からＵＰＳをshutdownさせるまでの時間の２つの時間が設定できる。<br>
+　ここで，日本語対応のlessは，slackwareに標準で入っていない。コンソールも漢字表示
+対応でないので，漢字表示が出来るターミナルから，moreか何かで見ると良い。<br>
+<br>
+<li>login時のfortune停止<br>
+　もし，loginしたときに，英文によるジョーク等が表示されるなら，表示しない設定に
+しておく。（ジョークに気を取られて，Last Login 時間を見落とすと，不幸が訪れるかも ^^;;）<br>
+　chmod -x /etc/profile.d/bsdgames.shしておけば良い。<br>
+<br>
+<!------------------------->
+<hr>
+<table>
+<tr>
+  <td>URL</td>
+  <td>http://www.geocities.co.jp/SiliconValley/4441/</td>
+</tr>
+<tr>
+  <td>E-Mail</td>
+  <td>ogi_hiro AT geocities DOT co DOT jp</td>
+</tr>
+<tr>
+  <td colspan="2"><!--#filemod--></td>
+</tr>
+</table>
+<!------------------------->
+</body>
+</html>
+
+<!--
+     FILE ARCHIVED ON 17:40:21 Nov 08, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 11:03:50 Sep 12, 2025.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
