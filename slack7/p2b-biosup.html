@@ -1,0 +1,94 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=Shift-JIS">
+<title>ＭＢのＢＩＯＳのアップデート</title>
+</head>
+<body>
+<br><br><hr>
+<h1>ＭＢのＢＩＯＳのアップデート</h1>
+<hr>
+　パソコンをサーバとして使っていると，なかなかアップデートのタイミングが有りません。<br>
+＜サーバー止めまぁーす＞と，宣言したら，ついでにやっておきましょう。<br>
+<br>
+　MB が ASUS (http://www.asus.com.tw/inside/downloadmap.htm)
+ASUS P2Bの場合の説明です。
+<blockquote>
+　上のリンク先で，Motherboard -> Slot1 -> Intel 440BX Chipset と辿ると，P2Bがあります。<br>
+　以前は，P2Bのページが，
+http://www.asus.com.tw/products/Motherboard/Pentiumpro/P2b/index.htmlにありました。<br>
+</blockquote>
+<ol>
+<li><a href="#junbi">準備</a><br>
+<br>
+<li><a href="#download">ダウンロード</a><br>
+<br>
+<li><a href="#makefd">フロッピーの作成</a><br>
+<br>
+<li><a href="#write">ＢＩＯＳの書き込み</a><br>
+<br>
+</ol>
+<hr>
+<ol>
+<li><a name="junbi">準備</a>
+<ul>
+<li>初めに，現在のBIOSのバージョンと，BIOSの設定を確認しておきましょう。
+<li>ＦＤが１枚必要です。
+</ul>
+<br>
+<br>
+<li><a name="download">ダウンロード</a>
+<ul>
+<li>ASUS(http://www.asus.com.tw/inside/downloadmap.htm)
+P2Bのwebページから，リンクを辿り，aflash.exe(BIOS書き込みプログラム)と，BIOSデータ 
+(zip形式)をダウンロードする。<br>
+<li>もし，zip形式の解凍ソフトが無ければ....<br>
+</ul>
+<br>
+<br>
+<li><a name="makefd">フロッピーの作成</a>
+<ul>
+<li>BIOSデータを解凍する(拡張子がAWDのファイルが出来る）。
+<li>ＦＤを１枚準備し，MS-DOSでformat /s する。
+（ＦＤ内にconfig.sys と autoexec.bat があってはいけない...と，どこかで読んだ）
+<li>ＦＤに，aflash.exeと，解凍して出来たAWD形式のデータを，コピーする。
+</ul>
+<br>
+<br>
+<li><a name="write">ＢＩＯＳの書き込み</a>
+<ul>
+<li>作ったＦＤで，コンピュータを起動し，aflash.exeを実行する。
+<li>現在の（古い）BIOSデータをＦＤにbackupしておく。
+<li>ダウンロードした（新しい）BIOSの書き込みを行う。
+（途中でトラブルがあっても，絶対にリセットしてはいけない（電源を切っては　だったかな）と，
+どこかで読んだ記憶がある。しかし，今まで数回書き込みをしているが，
+トラブルに遭遇したことはない。でも，トラブルに遭遇したらどうするのだろう？？）
+<li>上手く行ったと思ったら，祈りながら再起動し，BIOSのバージョンを確認し，BIOSの設定を行う。
+</ul>
+</ol>
+<!------------------------->
+<hr>
+<table>
+<tr>
+  <td>URL</td>
+  <td>http://www.geocities.co.jp/SiliconValley/4441/</td>
+</tr>
+<tr>
+  <td>E-Mail</td>
+  <td>ogi_hiro AT geocities DOT co DOT jp</td>
+</tr>
+<tr>
+  <td colspan="2"><!--#filemod--></td>
+</tr>
+</table>
+<!------------------------->
+</body>
+</html>
+
+<!--
+     FILE ARCHIVED ON 02:00:01 Nov 07, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 02:07:21 Sep 10, 2025.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
